@@ -52,7 +52,12 @@ def run_doctest(name, doctest_string, global_environment):
     if result.failed == 0:
         return (True, '')
     else:
-        return False, runresults.getvalue()
+        # return False, runresults.getvalue()
+        err_msg = runresults.getvalue()
+        if 'AssertionError: ' in err_msg:
+            return False, err_msg[err_msg.index('AssertionError: '):]
+        else:
+            return False, ''
 
 
 class OKTestFile(TestFile):
